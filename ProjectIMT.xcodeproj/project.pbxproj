@@ -13,6 +13,8 @@
 		668F40E22785D4EC00C35379 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40E12785D4EC00C35379 /* MainView.swift */; };
 		668F40E42785D51900C35379 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40E32785D51900C35379 /* OptionsView.swift */; };
 		668F40E62785D60600C35379 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40E52785D60600C35379 /* HomeView.swift */; };
+		668F40E82785DB5000C35379 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40E72785DB5000C35379 /* Customer.swift */; };
+		668F40EA2785DD5F00C35379 /* Transformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40E92785DD5F00C35379 /* Transformation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		668F40E12785D4EC00C35379 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		668F40E32785D51900C35379 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		668F40E52785D60600C35379 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		668F40E72785DB5000C35379 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		668F40E92785DD5F00C35379 /* Transformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 				668F40D72785D1A100C35379 /* Assets.xcassets */,
 				668F40D92785D1A100C35379 /* Preview Content */,
 				668F40E12785D4EC00C35379 /* MainView.swift */,
+				668F40E72785DB5000C35379 /* Customer.swift */,
+				668F40E92785DD5F00C35379 /* Transformation.swift */,
 				668F40E52785D60600C35379 /* HomeView.swift */,
 				668F40E32785D51900C35379 /* OptionsView.swift */,
 			);
@@ -144,6 +150,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				668F40E22785D4EC00C35379 /* MainView.swift in Sources */,
+				668F40E82785DB5000C35379 /* Customer.swift in Sources */,
+				668F40EA2785DD5F00C35379 /* Transformation.swift in Sources */,
 				668F40E62785D60600C35379 /* HomeView.swift in Sources */,
 				668F40D42785D1A000C35379 /* ProjectIMTApp.swift in Sources */,
 				668F40E42785D51900C35379 /* OptionsView.swift in Sources */,
