@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Transformation {
+struct Transformation: Identifiable {
     let id: UUID
     var name: String?
     var before_picture: Image?
@@ -16,7 +16,8 @@ struct Transformation {
     var before_date: String?
     var after_date: String?
     
-    init() {
+    init(name: String? = nil) {
         id = UUID()
+        self.name = name
     }
 }

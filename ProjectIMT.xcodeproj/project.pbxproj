@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		664440722787690400E451F6 /* MockCustomerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664440712787690400E451F6 /* MockCustomerData.swift */; };
 		668F40D42785D1A000C35379 /* ProjectIMTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40D32785D1A000C35379 /* ProjectIMTApp.swift */; };
 		668F40D82785D1A100C35379 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 668F40D72785D1A100C35379 /* Assets.xcassets */; };
 		668F40DB2785D1A100C35379 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 668F40DA2785D1A100C35379 /* Preview Assets.xcassets */; };
@@ -15,9 +16,11 @@
 		668F40E62785D60600C35379 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40E52785D60600C35379 /* HomeView.swift */; };
 		668F40E82785DB5000C35379 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40E72785DB5000C35379 /* Customer.swift */; };
 		668F40EA2785DD5F00C35379 /* Transformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40E92785DD5F00C35379 /* Transformation.swift */; };
+		668F40EC2785FA7B00C35379 /* TransformationItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F40EB2785FA7B00C35379 /* TransformationItemRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		664440712787690400E451F6 /* MockCustomerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCustomerData.swift; sourceTree = "<group>"; };
 		668F40D02785D1A000C35379 /* ProjectIMT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectIMT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		668F40D32785D1A000C35379 /* ProjectIMTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIMTApp.swift; sourceTree = "<group>"; };
 		668F40D72785D1A100C35379 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -27,6 +30,7 @@
 		668F40E52785D60600C35379 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		668F40E72785DB5000C35379 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		668F40E92785DD5F00C35379 /* Transformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformation.swift; sourceTree = "<group>"; };
+		668F40EB2785FA7B00C35379 /* TransformationItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformationItemRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,7 @@
 		668F40C72785D1A000C35379 = {
 			isa = PBXGroup;
 			children = (
+				664440712787690400E451F6 /* MockCustomerData.swift */,
 				668F40D22785D1A000C35379 /* ProjectIMT */,
 				668F40D12785D1A000C35379 /* Products */,
 			);
@@ -63,6 +68,7 @@
 				668F40D72785D1A100C35379 /* Assets.xcassets */,
 				668F40D92785D1A100C35379 /* Preview Content */,
 				668F40E12785D4EC00C35379 /* MainView.swift */,
+				668F40EB2785FA7B00C35379 /* TransformationItemRow.swift */,
 				668F40E72785DB5000C35379 /* Customer.swift */,
 				668F40E92785DD5F00C35379 /* Transformation.swift */,
 				668F40E52785D60600C35379 /* HomeView.swift */,
@@ -150,11 +156,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				668F40E22785D4EC00C35379 /* MainView.swift in Sources */,
+				668F40EC2785FA7B00C35379 /* TransformationItemRow.swift in Sources */,
 				668F40E82785DB5000C35379 /* Customer.swift in Sources */,
 				668F40EA2785DD5F00C35379 /* Transformation.swift in Sources */,
 				668F40E62785D60600C35379 /* HomeView.swift in Sources */,
 				668F40D42785D1A000C35379 /* ProjectIMTApp.swift in Sources */,
 				668F40E42785D51900C35379 /* OptionsView.swift in Sources */,
+				664440722787690400E451F6 /* MockCustomerData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

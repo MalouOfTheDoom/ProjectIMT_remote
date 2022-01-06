@@ -8,16 +8,23 @@
 import SwiftUI
 
 struct HomeView: View {
-//    let john = Customer(first_name: "John")
-//    let marc = Customer(first_name: "Marc")
-//    let marie = Customer(first_name: "Marie")
-    var customers_list = [Customer(first_name: "John"),
-                          Customer(first_name: "Marc"),
-                          Customer(first_name: "Marie")]
     
+    let data: MockCustomerData = MockCustomerData()
+    @State private var selection: Set<UUID> = []
+   
     var body: some View {
-        List(customers_list) {
-            Text($0.first_name)
+        NavigationView {
+            List(selection: $selection) {
+                ForEach(data.customers) { customer in
+                    Section(header: Text(customer.first_name)) {
+                        ForEach(customer.transformation_list) { transformation in
+                            TransformationItemRow(transformation: transformation)
+                        }
+                    }
+                }
+            }
+              .listStyle(SidebarListStyle())
+              .navigationTitle("Transformations")
         }
     }
 }
