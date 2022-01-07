@@ -31,12 +31,12 @@ class CustomerData: ObservableObject {
     @Published var customers: [Customer] =
     [
         Customer(first_name: "John", transformation_list: [
-            Transformation(name: "arrachage de dent"),
-            Transformation(name: "jolie nez"),
+            Transformation(name: "Opération du nez"),
+            Transformation(name: "Après une visite chez le dermatho"),
             Transformation()]),
         Customer(first_name: "Marc"),
         Customer(first_name: "Marie", transformation_list: [
-            Transformation(name: "jolie peau pour Marie")])
+            Transformation(name: "Dents de sagesses")])
     ]
     
     func deleteTransformation(customer_id: Int, transformation_indexes: IndexSet?) {
