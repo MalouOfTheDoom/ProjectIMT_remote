@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Customer: Identifiable {
+class Customer: ObservableObject { //ObservableObject permet de modifier les changements dans les vues, quand le modèle change.
     let id: UUID
     var first_name: String
     var last_name: String?
@@ -29,5 +29,17 @@ class Customer: Identifiable {
     func addTransformation(transformation: Transformation) {
         self.transformation_list.append(transformation)
     }
-    
+}
+
+class CustomerData: ObservableObject {
+    @Published var customers: [Customer] =
+    [
+        Customer(first_name: "John", transformation_list: [
+            Transformation(name: "arrachage de dent"),
+            Transformation(name: "jolie nez"),
+            Transformation()]),
+        Customer(first_name: "Marc"),
+        Customer(first_name: "Marie", transformation_list: [
+            Transformation(name: "jolie peau pour Marie")])
+    ]
 }

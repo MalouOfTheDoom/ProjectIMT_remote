@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct Transformation: Identifiable {
+class Transformation: Identifiable, ObservableObject { //class au lieu de struct a cause de ObservableObject
     let id: UUID
-    var name: String?
-    var before_picture: Image?
-    var after_picture: Image?
+    @Published var name: String?
+    @Published var before_picture: Image?
+    @Published var after_picture: Image?
     var before_date: String?
     var after_date: String?
     
