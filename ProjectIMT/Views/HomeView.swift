@@ -9,19 +9,17 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State private var customers: [Customer] = CustomerData().customers
+    @EnvironmentObject var customerData: CustomerData //CustomerData is a class that stores our pre-added data. When it's @published "customers" property is modified, all the views that use customerData will update.
     @State private var selection: Set<UUID> = []
-    @State private var updater: Bool = false
-   
+    
     var body: some View {
         VStack {
-            Text(String(updater)) //TODO: refaire bien le model pour ne pas avoir besoin de forcer le rerendu
             NavigationView {
                 List(selection: $selection) {
-                    ForEach(customers.indices, id: \.self) { id1 in
-                        Section(header: Text(self.customers[id1].first_name)) {
-                            ForEach(customers[id1].transformation_list.indices, id: \.self) { id2 in
-                                TransformationItemRow(transformation: self.$customers[id1].transformation_list[id2])
+                    ForEach(customerData.customers.indices, id: \.self) { id1 in
+                        Section(header: Text(customerData.customers[id1].first_name)) {
+                            ForEach(customerData.customers[id1].transformation_list.indices, id: \.self) { id2 in
+                                TransformationItemRow(transformation: $customerData.customers[id1].transformation_list[id2])
                             }.onDelete(perform: { indices in
                                 deleteRow(customer_id: id1, indexes: indices)
                             })
@@ -35,8 +33,8 @@ struct HomeView: View {
     }
     
     func deleteRow(customer_id: Int, indexes: IndexSet?) {
-        updater.toggle() 
-        customers[customer_id].transformation_list.remove(atOffsets: indexes!)
+        //we modifiy our customerData (which is shared across all views, as an @StateObject)
+        customerData.deleteTransformation(customer_id: customer_id, transformation_indexes: indexes)
     }
 }
 
