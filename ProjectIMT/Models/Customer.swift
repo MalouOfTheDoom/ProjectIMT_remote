@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Customer: ObservableObject { //ObservableObject permet de modifier les changements dans les vues, quand le modèle change.
+struct Customer {
     let id: UUID
     var first_name: String
     var last_name: String?
@@ -25,10 +25,6 @@ class Customer: ObservableObject { //ObservableObject permet de modifier les cha
         
         self.transformation_list = transformation_list
     }
-    
-    func addTransformation(transformation: Transformation) {
-        self.transformation_list.append(transformation)
-    }
 }
 
 class CustomerData: ObservableObject {
@@ -42,4 +38,8 @@ class CustomerData: ObservableObject {
         Customer(first_name: "Marie", transformation_list: [
             Transformation(name: "jolie peau pour Marie")])
     ]
+    
+    func deleteTransformation(customer_id: Int, transformation_indexes: IndexSet?) {
+        self.customers[customer_id].transformation_list.remove(atOffsets: transformation_indexes!)
+    }
 }

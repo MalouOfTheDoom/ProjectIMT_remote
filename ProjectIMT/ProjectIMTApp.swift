@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct ProjectIMTApp: App {
+    
+    @StateObject var customerData = CustomerData()
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainView().environmentObject(customerData)
         }
     }
 }
