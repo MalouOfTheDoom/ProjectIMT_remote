@@ -10,9 +10,11 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var customerData: CustomerData //CustomerData is a class that stores our pre-added data. When it's @published "customers" property is modified, all the views that use customerData will update.
+    
     @State private var selection: Set<UUID> = []
     @State private var showDeleteConfirmationAlert: Bool = false
-    @State private var customerIdToDelete: Int? //because there is only one alert, it needs to know which row we clicked
+    @State private var customerSelected: Int? //because there is only one alert, it needs to know which row we clicked
+    @State private var isShowingAddTransformationSheet: Bool = false
     
     var body: some View {
         VStack {
@@ -31,12 +33,12 @@ struct HomeView: View {
                                 Button(action: {return} ) {
                                     Image(systemName: "pencil").foregroundColor(Color.blue)
                                 }
-                                Button(action: {return} ) {
+                                Button(action: {isShowingAddTransformationSheet = true; } ) {
                                     Image(systemName: "plus.circle").foregroundColor(Color.green)
                                 }
                                 
                                 Button(role: .destructive,
-                                       action: {showDeleteConfirmationAlert = true; customerIdToDelete = id1}
+                                       action: {showDeleteConfirmationAlert = true; customerSelected = id1}
                                 ) {
                                     Image(systemName: "trash")
                                 }
@@ -51,8 +53,11 @@ struct HomeView: View {
                   .alert(isPresented: $showDeleteConfirmationAlert) {
                       Alert(title: Text("Are you sure you want to delete this transformation ?"),
                             primaryButton: .default(Text("Cancel")),
-                            secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer(customer_id: customerIdToDelete!)} )
+                            secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer(customer_id: customerSelected!)} )
                       )
+                  }
+                  .sheet(isPresented: $isShowingAddTransformationSheet) {
+                      AddTransformation()
                   }
             }
         }

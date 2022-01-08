@@ -27,6 +27,7 @@ struct Customer {
     }
 }
 
+//this class acts like the ViewModel for the Home page. 
 class CustomerData: ObservableObject {
     @Published var customers: [Customer] =
     [
