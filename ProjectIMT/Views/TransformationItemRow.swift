@@ -19,10 +19,15 @@ struct TransformationItemRow: View {
             Spacer()
             VStack {
                 if let name = transformation.name {
-                    Text(name) 
+                    Text(name)
+                        .font(.title2)
+                        .lineLimit(1)
                 }
                 Button("see Transformation!", action: openTransformation)
-                Image(systemName: "trash")
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(Color.white)
+                    .cornerRadius(20)
             }
             Spacer()
             ImagePicker(image: $transformation.after_picture)
