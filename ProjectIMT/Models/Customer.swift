@@ -42,4 +42,8 @@ class CustomerData: ObservableObject {
     func deleteTransformation(customer_id: Int, transformation_indexes: IndexSet?) {
         self.customers[customer_id].transformation_list.remove(atOffsets: transformation_indexes!)
     }
+    
+    func deleteCustomer(customer_id: Int) {
+        self.customers.remove(at: customer_id)
+    }
 }
