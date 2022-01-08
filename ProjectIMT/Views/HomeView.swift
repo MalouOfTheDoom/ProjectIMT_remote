@@ -33,13 +33,13 @@ struct HomeView: View {
     }
     
     func deleteRow(customer_id: Int, indexes: IndexSet?) {
-        //we modifiy our customerData (which is shared across all views, as an @StateObject)
+//        we modifiy our customerData (which is shared across all views, as an @StateObject)
         customerData.deleteTransformation(customer_id: customer_id, transformation_indexes: indexes)
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView().environmentObject(CustomerData())
     }
 }
