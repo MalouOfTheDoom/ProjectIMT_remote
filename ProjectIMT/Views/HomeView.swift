@@ -55,9 +55,8 @@ struct HomeView: View {
     }
 }
 
-//TODO: preview is crashing, WHYYYY?
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeView()
-//    }
-//}
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView().environmentObject(CustomerData())
+    }
+}
