@@ -40,11 +40,38 @@ class CustomerData: ObservableObject {
             Transformation(name: "Dents de sagesses")])
     ]
     
-    func deleteTransformation(customer_id: Int, transformation_indexes: IndexSet?) {
-        self.customers[customer_id].transformation_list.remove(atOffsets: transformation_indexes!)
+    func deleteTransformation(customer_id: UUID, transformation_id: UUID) {
+        let index1 = customers.firstIndex(where: { customer in
+            return customer.id == customer_id ? true : false
+        })
+        if index1 != nil {
+            if let index2 = customers[index1!].transformation_list.firstIndex(where: { transformation in
+                return transformation.id == transformation_id ? true : false
+            }) {
+                customers[index1!].transformation_list.remove(at: index2)
+            }
+        }
     }
     
-    func deleteCustomer(customer_id: Int) {
-        self.customers.remove(at: customer_id)
+    func deleteCustomer(customer_id: UUID) {
+        if let index = customers.firstIndex(where: { customer in
+            return customer.id == customer_id ? true : false
+        }) {
+            customers.remove(at: index)
+        }
+    }
+    
+    func getTransformation(customer_id: UUID, transformation_id: UUID) -> Transformation? {
+        let index1 = customers.firstIndex(where: { customer in
+            return customer.id == customer_id ? true : false
+        })
+        if index1 != nil {
+            if let index2 = customers[index1!].transformation_list.firstIndex(where: { transformation in
+                return transformation.id == transformation_id ? true : false
+            }) {
+                return customers[index1!].transformation_list[index2]
+            }
+        }
+        return nil
     }
 }

@@ -25,7 +25,7 @@ struct HomeView: View {
                             ForEach(customerData.customers[id1].transformation_list.indices, id: \.self) { id2 in
                                 TransformationItemRow(transformation: $customerData.customers[id1].transformation_list[id2])
                             }.onDelete(perform: { indices in
-                                deleteRow(customer_id: id1, indexes: indices)
+                                deleteRow(customer_index: id1, indexes: indices)
                             })
                         }, header: {
                             HStack {
@@ -53,7 +53,7 @@ struct HomeView: View {
                   .alert(isPresented: $showDeleteConfirmationAlert) {
                       Alert(title: Text("Are you sure you want to delete this transformation ?"),
                             primaryButton: .default(Text("Cancel")),
-                            secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer(customer_id: customerSelected!)} )
+                            secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer(customer_index: customerSelected!)} )
                       )
                   }
                   .sheet(isPresented: $isShowingAddTransformationSheet) {
@@ -63,12 +63,15 @@ struct HomeView: View {
         }
     }
     
-    func deleteRow(customer_id: Int, indexes: IndexSet?) {
-        //we modifiy our customerData (which is shared across all views, as an @StateObject)
-        customerData.deleteTransformation(customer_id: customer_id, transformation_indexes: indexes)
+    func deleteRow(customer_index: Int, indexes: IndexSet?) { //we modifiy our customerData (which is shared across all views, as an @StateObject)
+        let customer_id = customerData.customers[customer_index].id
+        let transformation_index = indexes!.first!
+        let transformation_id = customerData.customers[customer_index].transformation_list[transformation_index].id
+        customerData.deleteTransformation(customer_id: customer_id, transformation_id: transformation_id)
     }
     
-    func deleteCustomer(customer_id: Int) {
+    func deleteCustomer(customer_index: Int) {
+        let customer_id = customerData.customers[customer_index].id
         customerData.deleteCustomer(customer_id: customer_id)
     }
 }
