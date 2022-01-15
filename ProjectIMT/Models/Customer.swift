@@ -40,6 +40,11 @@ class CustomerData: ObservableObject {
             Transformation(name: "Dents de sagesses")])
     ]
     
+    func addCustomer(first_name: String) {
+        let customer = Customer(first_name: first_name)
+        self.customers.append(customer)
+    }
+    
     func deleteTransformation(customer_id: UUID, transformation_id: UUID) {
         let index1 = customers.firstIndex(where: { customer in
             return customer.id == customer_id ? true : false
