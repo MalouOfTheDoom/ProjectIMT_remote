@@ -61,6 +61,16 @@ class CustomerData: ObservableObject {
         }
     }
     
+    func addTransformation(customer_id: UUID, transformation_name: String) {
+        let index = customers.firstIndex(where: { customer in
+            return customer.id == customer_id ? true : false
+        })
+        if index != nil {
+            self.customers[index!].transformation_list.append(Transformation(name: transformation_name))
+        }
+        
+    }
+    
     func getTransformation(customer_id: UUID, transformation_id: UUID) -> Transformation? {
         let index1 = customers.firstIndex(where: { customer in
             return customer.id == customer_id ? true : false

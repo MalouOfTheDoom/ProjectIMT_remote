@@ -45,7 +45,7 @@ struct HomeView: View {
                                 } .alert(isPresented: $showDeleteConfirmationAlert) {
                                     Alert(title: Text("Delete " + customerData.customers[customerSelected!].first_name + " ?"),
                                           primaryButton: .default(Text("Cancel")),
-                                          secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer(customer_index: customerSelected!)} )
+                                          secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer()} )
                                     )
                                 }
                                 
@@ -75,13 +75,14 @@ struct HomeView: View {
         customerData.deleteTransformation(customer_id: customer_id, transformation_id: transformation_id)
     }
     
-    func deleteCustomer(customer_index: Int) {
-        let customer_id = customerData.customers[customer_index].id
+    func deleteCustomer() {
+        let customer_id = customerData.customers[self.customerSelected!].id
         customerData.deleteCustomer(customer_id: customer_id)
     }
     
     func addTransformation() {
-        print("heyy")
+        let customer_id = customerData.customers[self.customerSelected!].id
+        customerData.addTransformation(customer_id: customer_id,transformation_name: transformationNameToAdd!)
     }
     
 }
