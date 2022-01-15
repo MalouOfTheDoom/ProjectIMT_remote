@@ -18,6 +18,8 @@ struct HomeView: View {
     @State private var transformationNameToAdd: String? = ""
     @State private var showAddTransformationAlert: Bool = false
     
+    @State private var showAddCustomerSheet: Bool = false
+    
     
     var body: some View {
         VStack {
@@ -64,11 +66,14 @@ struct HomeView: View {
                       ToolbarItem(placement: .principal) {
                           HStack {
                               Text("Patients").font(.headline)
-                              Button(action: {} ) {
+                              Button(action: {showAddCustomerSheet = true} ) {
                                   Image(systemName: "plus.circle").foregroundColor(Color.green)
                               }
                           }
                       }
+                  }
+                  .sheet(isPresented: $showAddCustomerSheet) {
+                      AddCustomerSheet(showAddCustomerSheet: $showAddCustomerSheet)
                   }
                   .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
                       TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
