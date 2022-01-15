@@ -14,6 +14,7 @@ struct HomeView: View {
     @State private var selection: Set<UUID> = []
     @State private var showDeleteConfirmationAlert: Bool = false
     @State private var customerSelected: Int? //because there is only one alert, it needs to know which row we clicked
+
     @State private var transformationNameToAdd: String? = ""
     @State private var showAddTransformationAlert: Bool = false
     
@@ -60,7 +61,7 @@ struct HomeView: View {
                   .listStyle(SidebarListStyle())
                   .navigationTitle("Transformations")
                   .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
-                      TextFieldAlert(title: "Alert Title", message: "Alert Message", text: $transformationNameToAdd, addAction: addTransformation)
+                      TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
                   } 
                   
                   
