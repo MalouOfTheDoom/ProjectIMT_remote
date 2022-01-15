@@ -59,12 +59,22 @@ struct HomeView: View {
                     }
                 }
                   .listStyle(SidebarListStyle())
-                  .navigationTitle("Transformations")
+                  .navigationBarTitleDisplayMode(.inline)
+                  .toolbar {
+                      ToolbarItem(placement: .principal) {
+                          HStack {
+                              Text("Patients").font(.headline)
+                              Button(action: {} ) {
+                                  Image(systemName: "plus.circle").foregroundColor(Color.green)
+                              }
+                          }
+                      }
+                  }
                   .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
                       TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
                   } 
                   
-                  
+                
             }
         }
     }
