@@ -10,14 +10,15 @@ import UIKit
 
 //Todo: rajouter gestion des erreurs
 struct ImagePicker: View {
-    @Binding var image: Image?
+    @Binding var image: UIImage?
     @State private var shouldPresentImagePicker = false
     @State private var shouldPresentActionScheet = false
-    @State private var shouldPresentCamera = false
+    
+    @State private var sourceType: UIImagePickerController.SourceType = .camera
     
     var body: some View {
         // WARNING: Force wrapped image for demo purpose
-        (image != nil ? image! : Image(systemName: "photo.fill"))
+        (image != nil ? Image(uiImage: image!) : Image(systemName: "photo.fill"))
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 50, height: 50)
@@ -26,14 +27,21 @@ struct ImagePicker: View {
                 .shadow(radius: 10)
                 .onTapGesture { self.shouldPresentActionScheet = true }
                 .sheet(isPresented: $shouldPresentImagePicker) {
-                    SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image, isPresented: self.$shouldPresentImagePicker)
+//                    SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image, isPresented: self.$shouldPresentImagePicker)
+//                    CustomCameraView(capturedImage: self.$image, sourceType: self.shouldPresentCamera ? .camera : .photoLibrary)
+                    if self.sourceType == .camera {
+                        CustomCameraView(capturedImage: self.$image)
+                    }
+                    else {
+                        SUImagePickerView(image: self.$image, isPresented: self.$shouldPresentImagePicker)
+                    }
             }.actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
                 ActionSheet(title: Text("Choose mode"), message: Text("Please choose your preferred mode to set your profile image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
                     self.shouldPresentImagePicker = true
-                    self.shouldPresentCamera = true
+                    self.sourceType = .camera
                 }), ActionSheet.Button.default(Text("Photo Library"), action: {
                     self.shouldPresentImagePicker = true
-                    self.shouldPresentCamera = false
+                    self.sourceType = .photoLibrary
                 }), ActionSheet.Button.cancel()])
         }
     }
@@ -43,7 +51,7 @@ struct ImagePicker: View {
 struct SUImagePickerView: UIViewControllerRepresentable {
     
     var sourceType: UIImagePickerController.SourceType = .photoLibrary
-    @Binding var image: Image?
+    @Binding var image: UIImage?
     @Binding var isPresented: Bool
     
     func makeCoordinator() -> ImagePickerViewCoordinator {
@@ -65,17 +73,17 @@ struct SUImagePickerView: UIViewControllerRepresentable {
 
 class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    @Binding var image: Image?
+    @Binding var image: UIImage?
     @Binding var isPresented: Bool
     
-    init(image: Binding<Image?>, isPresented: Binding<Bool>) {
+    init(image: Binding<UIImage?>, isPresented: Binding<Bool>) {
         self._image = image
         self._isPresented = isPresented
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.image = Image(uiImage: image)
+            self.image = image
         }
         self.isPresented = false
     }
@@ -88,7 +96,7 @@ class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIIm
 
 //just for the preview
 struct ImagePickerPreview_Container: View {
-    @State var image: Image? = nil
+    @State var image: UIImage? = nil
     var body: some View {
         ImagePicker(image: $image)
     }
