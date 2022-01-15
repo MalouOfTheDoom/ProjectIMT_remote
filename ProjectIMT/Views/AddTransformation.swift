@@ -8,13 +8,23 @@
 import SwiftUI
 
 struct AddTransformation: View {
+    @State var showAddTransformationAlert: Bool = true
+    @State var transformationNameToAdd: String? = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Text(transformationNameToAdd!)
+        }
+        .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
+                            TextFieldAlert(title: "Alert Title", message: "Alert Message", text: $transformationNameToAdd)
+        }
     }
 }
 
+
+
 struct AddCustomerView_Previews: PreviewProvider {
     static var previews: some View {
-        AddTransformation()
+        AddTransformation().environmentObject(CustomerData())
     }
 }

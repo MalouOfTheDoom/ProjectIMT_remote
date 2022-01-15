@@ -14,7 +14,9 @@ struct HomeView: View {
     @State private var selection: Set<UUID> = []
     @State private var showDeleteConfirmationAlert: Bool = false
     @State private var customerSelected: Int? //because there is only one alert, it needs to know which row we clicked
-    @State private var isShowingAddTransformationSheet: Bool = false
+    @State private var transformationNameToAdd: String? = ""
+    @State private var showAddTransformationAlert: Bool = false
+    
     
     var body: some View {
         VStack {
@@ -30,35 +32,38 @@ struct HomeView: View {
                         }, header: {
                             HStack {
                                 Text(customerData.customers[id1].first_name)
+                                
+                                //edit Customer button
                                 Button(action: {return} ) {
                                     Image(systemName: "pencil").foregroundColor(Color.blue)
                                 }
-                                Button(action: {isShowingAddTransformationSheet = true; } ) {
-                                    Image(systemName: "plus.circle").foregroundColor(Color.green)
+                                
+                                //delete Customer button
+                                Button(role: .destructive,
+                                       action: {showDeleteConfirmationAlert = true; customerSelected = id1}) {
+                                    Image(systemName: "trash")
+                                } .alert(isPresented: $showDeleteConfirmationAlert) {
+                                    Alert(title: Text("Delete " + customerData.customers[customerSelected!].first_name + " ?"),
+                                          primaryButton: .default(Text("Cancel")),
+                                          secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer(customer_index: customerSelected!)} )
+                                    )
                                 }
                                 
-                                Button(role: .destructive,
-                                       action: {showDeleteConfirmationAlert = true; customerSelected = id1}
-                                ) {
-                                    Image(systemName: "trash")
+                                //add Transformation button
+                                Button(action: {showAddTransformationAlert = true; customerSelected = id1} ) {
+                                    Image(systemName: "plus.circle").foregroundColor(Color.green)
                                 }
                             }
-                        }) {
-                            
-                        }
+                        })
                     }
                 }
                   .listStyle(SidebarListStyle())
                   .navigationTitle("Transformations")
-                  .alert(isPresented: $showDeleteConfirmationAlert) {
-                      Alert(title: Text("Are you sure you want to delete this transformation ?"),
-                            primaryButton: .default(Text("Cancel")),
-                            secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer(customer_index: customerSelected!)} )
-                      )
-                  }
-                  .sheet(isPresented: $isShowingAddTransformationSheet) {
-                      AddTransformation()
-                  }
+                  .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
+                      TextFieldAlert(title: "Alert Title", message: "Alert Message", text: $transformationNameToAdd, addAction: addTransformation)
+                  } 
+                  
+                  
             }
         }
     }
@@ -74,6 +79,11 @@ struct HomeView: View {
         let customer_id = customerData.customers[customer_index].id
         customerData.deleteCustomer(customer_id: customer_id)
     }
+    
+    func addTransformation() {
+        print("heyy")
+    }
+    
 }
 
 struct HomeView_Previews: PreviewProvider {
