@@ -17,8 +17,7 @@ struct ImagePicker: View {
     
     var body: some View {
         // WARNING: Force wrapped image for demo purpose
-        if image != nil {
-            image!
+        (image != nil ? image! : Image(systemName: "photo.fill"))
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 50, height: 50)
@@ -36,28 +35,6 @@ struct ImagePicker: View {
                     self.shouldPresentImagePicker = true
                     self.shouldPresentCamera = false
                 }), ActionSheet.Button.cancel()])
-            }
-
-        } else {
-            Image(systemName: "photo.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 50, height: 50)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                .shadow(radius: 10)
-                .onTapGesture { self.shouldPresentActionScheet = true }
-                .sheet(isPresented: $shouldPresentImagePicker) {
-                    SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image, isPresented: self.$shouldPresentImagePicker)
-            }.actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
-                ActionSheet(title: Text("Choose mode"), message: Text("Please choose your preferred mode to set your profile image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
-                    self.shouldPresentImagePicker = true
-                    self.shouldPresentCamera = true
-                }), ActionSheet.Button.default(Text("Photo Library"), action: {
-                    self.shouldPresentImagePicker = true
-                    self.shouldPresentCamera = false
-                }), ActionSheet.Button.cancel()])
-            }
         }
     }
     
