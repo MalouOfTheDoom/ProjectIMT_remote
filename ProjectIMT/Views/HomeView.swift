@@ -10,9 +10,14 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var customerData: CustomerData //CustomerData is a class that stores our pre-added data. When it's @published "customers" property is modified, all the views that use customerData will update.
+    
     @State private var selection: Set<UUID> = []
     @State private var showDeleteConfirmationAlert: Bool = false
-    @State private var customerIdToDelete: Int? //because there is only one alert, it needs to know which row we clicked
+    @State private var customerSelected: Int? //because there is only one alert, it needs to know which row we clicked
+
+    @State private var transformationNameToAdd: String? = ""
+    @State private var showAddTransformationAlert: Bool = false
+    
     
     var body: some View {
         VStack {
@@ -23,49 +28,64 @@ struct HomeView: View {
                             ForEach(customerData.customers[id1].transformation_list.indices, id: \.self) { id2 in
                                 TransformationItemRow(transformation: $customerData.customers[id1].transformation_list[id2])
                             }.onDelete(perform: { indices in
-                                deleteRow(customer_id: id1, indexes: indices)
+                                deleteRow(customer_index: id1, indexes: indices)
                             })
                         }, header: {
                             HStack {
                                 Text(customerData.customers[id1].first_name)
+                                
+                                //edit Customer button
                                 Button(action: {return} ) {
                                     Image(systemName: "pencil").foregroundColor(Color.blue)
                                 }
-                                Button(action: {return} ) {
-                                    Image(systemName: "plus.circle").foregroundColor(Color.green)
+                                
+                                //delete Customer button
+                                Button(role: .destructive,
+                                       action: {showDeleteConfirmationAlert = true; customerSelected = id1}) {
+                                    Image(systemName: "trash")
+                                } .alert(isPresented: $showDeleteConfirmationAlert) {
+                                    Alert(title: Text("Delete " + customerData.customers[customerSelected!].first_name + " ?"),
+                                          primaryButton: .default(Text("Cancel")),
+                                          secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer()} )
+                                    )
                                 }
                                 
-                                Button(role: .destructive,
-                                       action: {showDeleteConfirmationAlert = true; customerIdToDelete = id1}
-                                ) {
-                                    Image(systemName: "trash")
+                                //add Transformation button
+                                Button(action: {showAddTransformationAlert = true; customerSelected = id1} ) {
+                                    Image(systemName: "plus.circle").foregroundColor(Color.green)
                                 }
                             }
-                        }) {
-                            
-                        }
+                        })
                     }
                 }
                   .listStyle(SidebarListStyle())
                   .navigationTitle("Transformations")
-                  .alert(isPresented: $showDeleteConfirmationAlert) {
-                      Alert(title: Text("Are you sure you want to delete this transformation ?"),
-                            primaryButton: .default(Text("Cancel")),
-                            secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer(customer_id: customerIdToDelete!)} )
-                      )
-                  }
+                  .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
+                      TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
+                  } 
+                  
+                  
             }
         }
     }
     
-    func deleteRow(customer_id: Int, indexes: IndexSet?) {
-        //we modifiy our customerData (which is shared across all views, as an @StateObject)
-        customerData.deleteTransformation(customer_id: customer_id, transformation_indexes: indexes)
+    func deleteRow(customer_index: Int, indexes: IndexSet?) { //we modifiy our customerData (which is shared across all views, as an @StateObject)
+        let customer_id = customerData.customers[customer_index].id
+        let transformation_index = indexes!.first!
+        let transformation_id = customerData.customers[customer_index].transformation_list[transformation_index].id
+        customerData.deleteTransformation(customer_id: customer_id, transformation_id: transformation_id)
     }
     
-    func deleteCustomer(customer_id: Int) {
+    func deleteCustomer() {
+        let customer_id = customerData.customers[self.customerSelected!].id
         customerData.deleteCustomer(customer_id: customer_id)
     }
+    
+    func addTransformation() {
+        let customer_id = customerData.customers[self.customerSelected!].id
+        customerData.addTransformation(customer_id: customer_id,transformation_name: transformationNameToAdd!)
+    }
+    
 }
 
 struct HomeView_Previews: PreviewProvider {
