@@ -14,24 +14,32 @@ struct TransformationItemRow: View {
     var body: some View {
         
         HStack {
-            Spacer()
             ImagePicker(image: $transformation.before_picture)
-            Spacer()
-            VStack {
+                .padding(.horizontal)
+            
+            VStack(spacing: 4) {
                 if let name = transformation.name {
                     Text(name)
-                        .font(.title2)
+                        .font(.subheadline)
                         .lineLimit(1)
                 }
-                Button("see Transformation!", action: openTransformation)
+                Button(action: openTransformation) { label:  do {
+                    HStack {
+                        Image(systemName: "photo.fill")
+                        Image(systemName: "arrowshape.turn.up.right.fill")
+                            .foregroundColor(Color.white)
+                        Image(systemName: "photo.fill")
+                    }
+                }}
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.red)
                     .foregroundColor(Color.white)
                     .cornerRadius(20)
             }
-            Spacer()
+            
             ImagePicker(image: $transformation.after_picture, before_picture: transformation.before_picture)
-            Spacer()
+                .padding(.horizontal)
         }
     }
     
