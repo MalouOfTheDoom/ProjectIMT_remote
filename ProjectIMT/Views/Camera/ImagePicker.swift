@@ -27,8 +27,6 @@ struct ImagePicker: View {
                 .shadow(radius: 10)
                 .onTapGesture { self.shouldPresentActionScheet = true }
                 .sheet(isPresented: $shouldPresentImagePicker) {
-//                    SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image, isPresented: self.$shouldPresentImagePicker)
-//                    CustomCameraView(capturedImage: self.$image, sourceType: self.shouldPresentCamera ? .camera : .photoLibrary)
                     if self.sourceType == .camera {
                         CustomCameraView(capturedImage: self.$image)
                     }
@@ -36,7 +34,7 @@ struct ImagePicker: View {
                         SUImagePickerView(image: self.$image, isPresented: self.$shouldPresentImagePicker)
                     }
             }.actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
-                ActionSheet(title: Text("Choose mode"), message: Text("Please choose your preferred mode to set your profile image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
+                ActionSheet(title: Text("Selection Image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
                     self.shouldPresentImagePicker = true
                     self.sourceType = .camera
                 }), ActionSheet.Button.default(Text("Photo Library"), action: {
