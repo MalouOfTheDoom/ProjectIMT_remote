@@ -11,6 +11,7 @@ import UIKit
 //Todo: rajouter gestion des erreurs
 struct ImagePicker: View {
     @Binding var image: UIImage?
+    var before_picture: UIImage?
     @State private var shouldPresentImagePicker = false
     @State private var shouldPresentActionScheet = false
     
@@ -28,7 +29,7 @@ struct ImagePicker: View {
                 .onTapGesture { self.shouldPresentActionScheet = true }
                 .sheet(isPresented: $shouldPresentImagePicker) {
                     if self.sourceType == .camera {
-                        CustomCameraView(capturedImage: self.$image)
+                        CustomCameraView(capturedImage: self.$image, before_picture: before_picture)
                     }
                     else {
                         SUImagePickerView(image: self.$image, isPresented: self.$shouldPresentImagePicker)

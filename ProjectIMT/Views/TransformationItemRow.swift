@@ -30,7 +30,7 @@ struct TransformationItemRow: View {
                     .cornerRadius(20)
             }
             Spacer()
-            ImagePicker(image: $transformation.after_picture)
+            ImagePicker(image: $transformation.after_picture, before_picture: transformation.before_picture)
             Spacer()
         }
     }

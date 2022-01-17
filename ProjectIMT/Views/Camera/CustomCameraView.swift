@@ -11,6 +11,7 @@ struct CustomCameraView: View {
     
     let cameraService = CameraService()
     @Binding var capturedImage: UIImage?
+    var before_picture: UIImage?
     
     @Environment(\.presentationMode) private var presentationMode //deprecated, we could use isPresented or dissmiss instead...
     
@@ -30,11 +31,19 @@ struct CustomCameraView: View {
                 }
             }
             
-            Image("ProportionFaceTemplate")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 300, height: 400, alignment: .center)
-                .opacity(0.8)
+            if before_picture != nil {
+                Image(uiImage: before_picture!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 300, height: 400, alignment: .center)
+                    .opacity(0.4)
+            } else {
+                Image("ProportionFaceTemplate")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 300, height: 400, alignment: .center)
+                    .opacity(0.8)
+            }
             
             VStack {
                 Spacer()
