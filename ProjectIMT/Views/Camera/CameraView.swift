@@ -1,6 +1,6 @@
 //
 //  CameraView.swift
-//  CustomCamera
+//  ProjectIMT
 //
 //  Created by Maël Trouillet on 04/01/2022.
 //
