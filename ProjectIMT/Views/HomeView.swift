@@ -58,6 +58,14 @@ struct HomeView: View {
                                     Button(action: {showAddTransformationAlert = true; customerSelected = id1} ) {
                                         Image(systemName: "plus.circle").foregroundColor(Color.green)
                                     }
+                                    
+                                    Spacer()
+                                    
+                                    Text(String(customerData.customers[id1].transformation_list.count))
+                                        .foregroundColor(.blue)
+                                        .font(.system(size: 15.0))
+                                        .fontWeight(.light)
+                                    
                                 }
                             })
                         }
