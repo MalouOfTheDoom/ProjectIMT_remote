@@ -30,7 +30,7 @@ struct ImagePicker: View {
                 .sheet(isPresented: $shouldPresentImagePicker) {
                     if self.sourceType == .camera {
 //                        CustomCameraView(capturedImage: self.$image, before_picture: before_picture)
-                        CameraView2(captured_image: self.$image)
+                        CameraView2(captured_image: self.$image, before_picture: before_picture)
                     }
                     else {
                         SUImagePickerView(image: self.$image, isPresented: self.$shouldPresentImagePicker)

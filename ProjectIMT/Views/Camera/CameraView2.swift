@@ -11,9 +11,10 @@ import AVFoundation
 struct CameraView2: View {
     
     @Binding var captured_image: UIImage?
+    var before_picture: UIImage?
     
     var body: some View {
-        CameraViewWithModel(captured_image: $captured_image, camera: CameraModel(captured_image: $captured_image))
+        CameraViewWithModel(captured_image: $captured_image, before_picture: before_picture, camera: CameraModel(captured_image: $captured_image))
     }
 }
 
@@ -21,17 +22,48 @@ struct CameraViewWithModel: View {
     
     @Binding var captured_image: UIImage?
     
+    var before_picture: UIImage?
+    
     @StateObject var camera : CameraModel
     
     @Environment(\.presentationMode) private var presentationMode //deprecated, we could use isPresented or dissmiss instead...
     
     var body: some View {
         
+        
         ZStack {
             
             // Camera preview
             CameraPreview(camera: camera)
                 .ignoresSafeArea(.all, edges: .all)
+            
+            
+            // Face positionment layer
+            if before_picture != nil {
+                Image(uiImage: before_picture!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    //.frame(width: 400, height: 800, alignment: .center)
+                    .ignoresSafeArea(.all, edges: .all)
+                    .opacity(0.4)
+                
+//                Rectangle()
+//                    .fill(Color.orange)
+//                    .opacity(0.4)
+//                    .scaledToFill()
+//                    .clipped()
+//                    .ignoresSafeArea(.all, edges: .all)
+                    
+            }
+            
+            if before_picture == nil {
+                Image("ProportionFaceTemplate")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 300, height: 400, alignment: .center)
+                    .opacity(0.8)
+            }
+            
             
             VStack {
                 
@@ -114,7 +146,6 @@ class CameraModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     
     @Published var alert = false
     
-    //sice we are going to read pic data
     @Published var output = AVCapturePhotoOutput()
     
     //preview
@@ -122,14 +153,9 @@ class CameraModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     
     //Pic data
     @Binding var captured_image: UIImage?
-    //@Published var picData = Data(count: 0)
     
     init(captured_image: Binding<UIImage?>) {
         self._captured_image = captured_image
-    }
-    
-    func bind(toBind: UIImage?) {
-        self.captured_image = toBind
     }
     
     func check() {
@@ -206,6 +232,22 @@ class CameraModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
         }
     }
     
+    private func cropToPreviewLayer(originalImage: UIImage) -> UIImage? {
+        guard let cgImage = originalImage.cgImage else { return nil }
+
+        let outputRect = preview.metadataOutputRectConverted(fromLayerRect: preview.bounds)
+
+        let width = CGFloat(cgImage.width)
+        let height = CGFloat(cgImage.height)
+        let cropRect = CGRect(x: outputRect.origin.x * width, y: outputRect.origin.y * height, width: outputRect.size.width * width, height: outputRect.size.height * height)
+
+        if let croppedCGImage = cgImage.cropping(to: cropRect) {
+            return UIImage(cgImage: croppedCGImage, scale: 1.0, orientation: originalImage.imageOrientation)
+        }
+
+        return nil
+    }
+    
     
     func reTake() {
         
@@ -228,7 +270,8 @@ class CameraModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
         print("pic taken...")
         
         if let data = photo.fileDataRepresentation() {
-            self.captured_image = UIImage(data: data)
+            let uncroppedImage = UIImage(data: data)
+            self.captured_image = cropToPreviewLayer(originalImage: uncroppedImage!)
         } else {
             print("Error: no image data found")
         }
@@ -258,7 +301,7 @@ struct CameraPreview: UIViewRepresentable {
 
         camera.preview = AVCaptureVideoPreviewLayer(session: camera.session)
         camera.preview.frame = view.frame
-
+        
         camera.preview.videoGravity = .resizeAspectFill
         view.layer.addSublayer(camera.preview)
 
