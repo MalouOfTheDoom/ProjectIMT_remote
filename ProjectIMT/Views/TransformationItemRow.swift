@@ -10,6 +10,7 @@ import SwiftUI
 struct TransformationItemRow: View {
     
     @Binding var transformation: Transformation
+    @State var transformationSheetIsPresented: Bool = false
     
     var body: some View {
         
@@ -23,7 +24,7 @@ struct TransformationItemRow: View {
                         .font(.subheadline)
                         .lineLimit(1)
                 }
-                Button(action: openTransformation) { label:  do {
+                Button(action: openTransformation ) { label:  do {
                     HStack {
                         Image(systemName: "photo.fill")
                         Image(systemName: "arrowshape.turn.up.right.fill")
@@ -36,6 +37,9 @@ struct TransformationItemRow: View {
                     .background(Color.red)
                     .foregroundColor(Color.white)
                     .cornerRadius(20)
+                    .sheet(isPresented: $transformationSheetIsPresented) {
+                        ShowTransformationView(transformation: self.transformation)
+                    }
             }
             
             ImagePicker(image: $transformation.after_picture, before_picture: transformation.before_picture)
@@ -45,7 +49,7 @@ struct TransformationItemRow: View {
     }
     
     func openTransformation() {
-        
+        self.transformationSheetIsPresented = true
     }
 }
 
