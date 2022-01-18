@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6628E90F2795B76200C83519 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6628E90E2795B76200C83519 /* CameraService.swift */; };
-		6628E9112795B77800C83519 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6628E9102795B77800C83519 /* CameraView.swift */; };
-		6628E9132795B79000C83519 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6628E9122795B79000C83519 /* CustomCameraView.swift */; };
-		6628E95C279632FD00C83519 /* CameraView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6628E95B279632FD00C83519 /* CameraView2.swift */; };
+		6628E95C279632FD00C83519 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6628E95B279632FD00C83519 /* CameraView.swift */; };
 		663C0E31278B694D006576F0 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C0E30278B694D006576F0 /* TextFieldAlert.swift */; };
 		663C0E332793227A006576F0 /* AddCustomerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C0E322793227A006576F0 /* AddCustomerSheet.swift */; };
 		6644407827877E9700E451F6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644407727877E9700E451F6 /* ImagePicker.swift */; };
@@ -26,10 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6628E90E2795B76200C83519 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
-		6628E9102795B77800C83519 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		6628E9122795B79000C83519 /* CustomCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
-		6628E95B279632FD00C83519 /* CameraView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView2.swift; sourceTree = "<group>"; };
+		6628E95B279632FD00C83519 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		663C0E30278B694D006576F0 /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
 		663C0E322793227A006576F0 /* AddCustomerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomerSheet.swift; sourceTree = "<group>"; };
 		6644407727877E9700E451F6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -59,11 +53,8 @@
 		6605211E279340E700DB67B5 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				6628E9122795B79000C83519 /* CustomCameraView.swift */,
 				6644407727877E9700E451F6 /* ImagePicker.swift */,
-				6628E90E2795B76200C83519 /* CameraService.swift */,
-				6628E9102795B77800C83519 /* CameraView.swift */,
-				6628E95B279632FD00C83519 /* CameraView2.swift */,
+				6628E95B279632FD00C83519 /* CameraView.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -210,12 +201,9 @@
 				663C0E31278B694D006576F0 /* TextFieldAlert.swift in Sources */,
 				668F40E82785DB5000C35379 /* Customer.swift in Sources */,
 				668F40EA2785DD5F00C35379 /* Transformation.swift in Sources */,
-				6628E90F2795B76200C83519 /* CameraService.swift in Sources */,
-				6628E95C279632FD00C83519 /* CameraView2.swift in Sources */,
-				6628E9132795B79000C83519 /* CustomCameraView.swift in Sources */,
+				6628E95C279632FD00C83519 /* CameraView.swift in Sources */,
 				668F40E62785D60600C35379 /* HomeView.swift in Sources */,
 				668F40D42785D1A000C35379 /* ProjectIMTApp.swift in Sources */,
-				6628E9112795B77800C83519 /* CameraView.swift in Sources */,
 				668F40E42785D51900C35379 /* OptionsView.swift in Sources */,
 				663C0E332793227A006576F0 /* AddCustomerSheet.swift in Sources */,
 				6644407827877E9700E451F6 /* ImagePicker.swift in Sources */,
