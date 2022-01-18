@@ -34,10 +34,27 @@ struct TransformationItemRow: View {
                 }
                 Button(action: openTransformation ) { label:  do {
                     HStack {
-                        Image(systemName: "photo.fill")
+                        
+                        if (transformation.before_picture != nil && transformation.before_date != nil) {
+                            Text(transformation.before_date!.jourEtMois)
+                                .foregroundColor(Color.white)
+                                .font(.system(size: 15.0))
+                        } else {
+                            Image(systemName: "photo.fill")
+                                .font(.system(size: 20.0))
+                        }
+                        
                         Image(systemName: "arrowshape.turn.up.right.fill")
                             .foregroundColor(Color.white)
-                        Image(systemName: "photo.fill")
+                            .font(.system(size: 15.0))
+                        
+                        if (transformation.after_picture != nil && transformation.after_date != nil) {
+                            Text(transformation.after_date!, format: .dateTime.day().month().year())
+                                .font(.system(size: 15.0))
+                        } else {
+                            Image(systemName: "photo.fill")
+                                .font(.system(size: 20.0))
+                        }
                     }
                 }}
                     .frame(maxWidth: .infinity)
@@ -62,6 +79,19 @@ struct TransformationItemRow: View {
         self.transformationSheetIsPresented = true
     }
 }
+
+extension Formatter {
+    static let jourEtMois: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd")
+        return dateFormatter
+    }()
+}
+
+extension Date {
+    var jourEtMois: String { Formatter.jourEtMois.string(from: self) }
+}
+
 
 
 //just for the preview
