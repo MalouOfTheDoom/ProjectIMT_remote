@@ -22,64 +22,67 @@ struct HomeView: View {
     
     
     var body: some View {
-        VStack {
-            NavigationView {
-                List(selection: $selection) {
-                    ForEach(customerData.customers.indices, id: \.self) { id1 in
-                        Section(content: {
-                            ForEach(customerData.customers[id1].transformation_list.indices, id: \.self) { id2 in
-                                TransformationItemRow(transformation: $customerData.customers[id1].transformation_list[id2])
-                            }.onDelete(perform: { indices in
-                                deleteRow(customer_index: id1, indexes: indices)
+        GeometryReader { geometry in
+            VStack {
+                NavigationView {
+                    List(selection: $selection) {
+                        ForEach(customerData.customers.indices, id: \.self) { id1 in
+                            Section(content: {
+                                ForEach(customerData.customers[id1].transformation_list.indices, id: \.self) { id2 in
+                                    TransformationItemRow(transformation: $customerData.customers[id1].transformation_list[id2])
+                                        .frame(height: geometry.size.height/11, alignment: .center)
+                                }.onDelete(perform: { indices in
+                                    deleteRow(customer_index: id1, indexes: indices)
+                                })
+                            }, header: {
+                                HStack {
+                                    Text(customerData.customers[id1].first_name)
+                                    
+                                    //edit Customer button
+                                    Button(action: {return} ) {
+                                        Image(systemName: "pencil").foregroundColor(Color.blue)
+                                    }
+                                    
+                                    //delete Customer button
+                                    Button(role: .destructive,
+                                           action: {showDeleteConfirmationAlert = true; customerSelected = id1}) {
+                                        Image(systemName: "trash")
+                                    } .alert(isPresented: $showDeleteConfirmationAlert) {
+                                        Alert(title: Text("Delete " + customerData.customers[customerSelected!].first_name + " ?"),
+                                              primaryButton: .default(Text("Cancel")),
+                                              secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer()} )
+                                        )
+                                    }
+                                    
+                                    //add Transformation button
+                                    Button(action: {showAddTransformationAlert = true; customerSelected = id1} ) {
+                                        Image(systemName: "plus.circle").foregroundColor(Color.green)
+                                    }
+                                }
                             })
-                        }, header: {
-                            HStack {
-                                Text(customerData.customers[id1].first_name)
-                                
-                                //edit Customer button
-                                Button(action: {return} ) {
-                                    Image(systemName: "pencil").foregroundColor(Color.blue)
-                                }
-                                
-                                //delete Customer button
-                                Button(role: .destructive,
-                                       action: {showDeleteConfirmationAlert = true; customerSelected = id1}) {
-                                    Image(systemName: "trash")
-                                } .alert(isPresented: $showDeleteConfirmationAlert) {
-                                    Alert(title: Text("Delete " + customerData.customers[customerSelected!].first_name + " ?"),
-                                          primaryButton: .default(Text("Cancel")),
-                                          secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer()} )
-                                    )
-                                }
-                                
-                                //add Transformation button
-                                Button(action: {showAddTransformationAlert = true; customerSelected = id1} ) {
-                                    Image(systemName: "plus.circle").foregroundColor(Color.green)
-                                }
-                            }
-                        })
+                        }
                     }
-                }
-                  .listStyle(SidebarListStyle())
-                  .navigationBarTitleDisplayMode(.inline)
-                  .toolbar {
-                      ToolbarItem(placement: .principal) {
-                          HStack {
-                              Text("Patients").font(.headline)
-                              Button(action: {showAddCustomerSheet = true} ) {
-                                  Image(systemName: "plus.circle").foregroundColor(Color.green)
+                      .listStyle(SidebarListStyle())
+                      .navigationBarTitleDisplayMode(.inline)
+                      .toolbar {
+                          ToolbarItem(placement: .principal) {
+                              HStack {
+                                  Text("Patients").font(.headline)
+                                  Button(action: {showAddCustomerSheet = true} ) {
+                                      Image(systemName: "plus.circle").foregroundColor(Color.green)
+                                  }
                               }
                           }
                       }
-                  }
-                  .sheet(isPresented: $showAddCustomerSheet) {
-                      AddCustomerSheet(showAddCustomerSheet: $showAddCustomerSheet)
-                  }
-                  .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
-                      TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
-                  } 
-                  
-                
+                      .sheet(isPresented: $showAddCustomerSheet) {
+                          AddCustomerSheet(showAddCustomerSheet: $showAddCustomerSheet)
+                      }
+                      .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
+                          TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
+                      }
+                      
+                    
+                }
             }
         }
     }

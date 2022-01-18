@@ -1,12 +1,13 @@
 //
 //  CameraService.swift
-//  CustomCamera
+//  ProjectIMT
 //
 //  Created by Maël Trouillet on 04/01/2022.
 //
 
 import Foundation
 import AVFoundation
+import UIKit
 
 class CameraService {
     
@@ -55,7 +56,9 @@ class CameraService {
                     session.addOutput(output)
                 }
                 
-                previewLayer.videoGravity = .resizeAspectFill
+                //previewLayer.videoGravity = .resizeAspectFill
+                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                //previewLayer.videoGravity = .resizeAspect
                 previewLayer.session = session
                 
                 session.startRunning()
@@ -70,6 +73,7 @@ class CameraService {
     func capturePhoto(with settings: AVCapturePhotoSettings = AVCapturePhotoSettings()) {
         output.capturePhoto(with: settings, delegate: delegate!)
     }
-    
-    
 }
+
+
+
