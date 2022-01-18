@@ -12,6 +12,14 @@ struct TransformationItemRow: View {
     @Binding var transformation: Transformation
     @State var transformationSheetIsPresented: Bool = false
     
+    var bothImagesTaken : Bool {
+        if (transformation.before_picture != nil && transformation.after_picture != nil) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     var body: some View {
         
         HStack {
@@ -34,12 +42,14 @@ struct TransformationItemRow: View {
                 }}
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.red)
+                    .background(bothImagesTaken ? Color.red : Color.gray)
                     .foregroundColor(Color.white)
                     .cornerRadius(20)
+                    .disabled(!bothImagesTaken)
                     .sheet(isPresented: $transformationSheetIsPresented) {
                         ShowTransformationView(transformation: self.transformation)
                     }
+                    
             }
             
             ImagePicker(image: $transformation.after_picture, before_picture: transformation.before_picture)
@@ -55,15 +65,19 @@ struct TransformationItemRow: View {
 
 
 //just for the preview
-struct TransformationItem_Previews: PreviewProvider {
-    static var previews: some View {
-        TransformationItemPreview_Container()
+//not working
+#if DEBUG
+extension Binding {
+    static func mock(_ transformation: Transformation) -> Binding<Transformation> {
+        var transformation = transformation
+        return Binding<Transformation>(get: {return transformation}, set: {transformation = $0})
     }
 }
 
-struct TransformationItemPreview_Container: View {
-    @State var transformation = Transformation(name: "arrachage de dents")
-    var body: some View {
-        TransformationItemRow(transformation: $transformation)
+struct TransformationItem_Previews: PreviewProvider {
+    static var previews: some View {
+        TransformationItemRow(transformation: .mock(Transformation(name: "arrachage de dents")))
     }
 }
+#endif
+

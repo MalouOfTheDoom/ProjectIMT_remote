@@ -39,20 +39,20 @@ struct ShowTransformationView: View {
     }
 }
 
-struct ShowTransformationViewPreviewContainer: View {
-    var transformation = Transformation(name: "preview transfo",
-                                        before_picture: UIImage(contentsOfFile: "selfie1"),
-                                        after_picture: UIImage(contentsOfFile: "selfie2"),
-                                        before_date: Date(),
-                                        after_date: Date() )
-    var body: some View {
-        ShowTransformationView(transformation: transformation)
+extension Transformation {
+    static func getPreviewTransfo() -> Transformation {
+        let transformation = Transformation(name: "preview transfo",
+                                            before_picture: UIImage(contentsOfFile: "selfie1"),
+                                            after_picture: UIImage(contentsOfFile: "selfie2"),
+                                            before_date: Date(),
+                                            after_date: Date() )
+        return transformation
     }
-    
 }
+
 struct ShowTransformationView_Previews: PreviewProvider {
-    
     static var previews: some View {
-        ShowTransformationViewPreviewContainer()
+        ShowTransformationView(transformation: .getPreviewTransfo())
+        
     }
 }
