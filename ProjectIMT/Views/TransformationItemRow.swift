@@ -10,7 +10,9 @@ import SwiftUI
 struct TransformationItemRow: View {
     
     @Binding var transformation: Transformation
+    
     @State var transformationSheetIsPresented: Bool = false
+    @State var cantOpenTransformationAlertIsPresented: Bool = false
     
     var bothImagesTaken : Bool {
         if (transformation.before_picture != nil && transformation.after_picture != nil) {
@@ -62,7 +64,9 @@ struct TransformationItemRow: View {
                     .background(bothImagesTaken ? Color.red : Color.gray)
                     .foregroundColor(Color.white)
                     .cornerRadius(20)
-                    .disabled(!bothImagesTaken)
+                    .alert("Veuillez selectionner des photos avant de voir la transformation", isPresented: $cantOpenTransformationAlertIsPresented) {
+                        Button("OK", role: .cancel) { }
+                    }
                     .sheet(isPresented: $transformationSheetIsPresented) {
                         ShowTransformationView(transformation: self.transformation)
                     }
@@ -71,12 +75,17 @@ struct TransformationItemRow: View {
             
             ImagePicker(image: $transformation.after_picture, before_picture: transformation.before_picture)
                 .padding(.horizontal)
-                .disabled(transformation.before_picture == nil)
+                
         }
     }
     
     func openTransformation() {
-        self.transformationSheetIsPresented = true
+        if bothImagesTaken {
+            self.transformationSheetIsPresented = true
+        } else {
+            self.cantOpenTransformationAlertIsPresented = true
+        }
+        
     }
 }
 
