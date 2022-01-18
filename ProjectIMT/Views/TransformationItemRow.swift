@@ -40,6 +40,7 @@ struct TransformationItemRow: View {
             
             ImagePicker(image: $transformation.after_picture, before_picture: transformation.before_picture)
                 .padding(.horizontal)
+                .disabled(transformation.before_picture == nil)
         }
     }
     

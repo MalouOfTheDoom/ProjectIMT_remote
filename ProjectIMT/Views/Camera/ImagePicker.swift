@@ -24,13 +24,12 @@ struct ImagePicker: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 50, height: 50)
                 .clipShape(Circle())
-                .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                .overlay(Circle().stroke(Color.gray, lineWidth: 4))
                 .shadow(radius: 10)
                 .onTapGesture { self.shouldPresentActionScheet = true }
                 .sheet(isPresented: $shouldPresentImagePicker) {
                     if self.sourceType == .camera {
-//                        CustomCameraView(capturedImage: self.$image, before_picture: before_picture)
-                        CameraView2(captured_image: self.$image, before_picture: before_picture)
+                        CameraView(captured_image: self.$image, before_picture: before_picture)
                     }
                     else {
                         SUImagePickerView(image: self.$image, isPresented: self.$shouldPresentImagePicker)
