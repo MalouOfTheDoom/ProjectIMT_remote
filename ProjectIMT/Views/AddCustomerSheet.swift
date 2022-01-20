@@ -10,10 +10,14 @@ import SwiftUI
 struct AddCustomerSheet: View {
     
     @Binding var showAddCustomerSheet: Bool
-    @EnvironmentObject var customerData: CustomersListManager
+    
+    @EnvironmentObject var customersListManager: CustomersListManager
+    
     @State var first_name: String = ""
     @State var last_name: String = ""
     @State var birthday_date = Date()
+    
+    @State var showAlert = false
     
     var body: some View {
         Form {
@@ -27,15 +31,31 @@ struct AddCustomerSheet: View {
                     )
             }
             Button("Ajouter patient") {
-                customerData.addCustomer(first_name: first_name, last_name: last_name, birthday_date: birthday_date)
-                self.showAddCustomerSheet = false
+                self.addPatient()
+            } .alert("Veuillez saisir le prénom du patient...", isPresented: $showAlert) {
+                Button("OK", role: .cancel) { }
             }
+        }
+    }
+    
+    func addPatient() {
+        if (self.first_name != "") {
+            customersListManager.addCustomer(first_name: first_name,
+                                             last_name: last_name,
+                                             birthday_date: birthday_date)
+            self.showAddCustomerSheet = false
+        } else {
+            print("hello")
+            self.showAlert = true
         }
     }
 }
 
-//struct AddCustomerSheet_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddCustomerSheet()
-//    }
-//}
+
+#if DEBUG
+struct AddCustomerSheet_Previews: PreviewProvider {
+    static var previews: some View {
+        AddCustomerSheet(showAddCustomerSheet: .constant(true))
+    }
+}
+#endif
