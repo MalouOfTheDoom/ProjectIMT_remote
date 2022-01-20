@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct CustomersListView: View {
     
-    @EnvironmentObject var customerData: CustomerData //CustomerData is a class that stores our pre-added data. When it's @published "customers" property is modified, all the views that use customerData will update.
+    @EnvironmentObject var customerData: CustomersListManager //CustomerData is a class that stores our pre-added data. When it's @published "customers" property is modified, all the views that use customerData will update.
     
     @State private var selection: Set<UUID> = []
     @State private var showDeleteConfirmationAlert: Bool = false
@@ -116,6 +116,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView().environmentObject(CustomerData())
+        CustomersListView().environmentObject(CustomersListManager())
     }
 }

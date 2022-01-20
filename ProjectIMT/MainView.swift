@@ -10,12 +10,12 @@ import SwiftUI
 struct MainView: View {
     
     var body: some View {
-        HomeView()
+        CustomersListView()
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView().environmentObject(CustomerData())
+        MainView().environmentObject(CustomersListManager())
     }
 }

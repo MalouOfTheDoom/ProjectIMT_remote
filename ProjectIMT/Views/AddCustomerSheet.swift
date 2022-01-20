@@ -10,7 +10,7 @@ import SwiftUI
 struct AddCustomerSheet: View {
     
     @Binding var showAddCustomerSheet: Bool
-    @EnvironmentObject var customerData: CustomerData
+    @EnvironmentObject var customerData: CustomersListManager
     @State var first_name: String = ""
     @State var last_name: String = ""
     @State var birthday_date = Date()
