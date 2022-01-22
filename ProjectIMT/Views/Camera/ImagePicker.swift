@@ -11,6 +11,8 @@ import UIKit
 //Todo: rajouter gestion des erreurs
 struct ImagePicker: View {
     @Binding var image: UIImage?
+    @Binding var date: Date?
+    
     var before_picture: UIImage?
     @State private var shouldPresentImagePicker = false
     @State private var shouldPresentActionScheet = false
@@ -18,7 +20,7 @@ struct ImagePicker: View {
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     
     var body: some View {
-        // WARNING: Force wrapped image for demo purpose
+        
         (image != nil ? Image(uiImage: image!) : Image(systemName: "photo.fill"))
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -32,7 +34,7 @@ struct ImagePicker: View {
                         CameraView(captured_image: self.$image, before_picture: before_picture)
                     }
                     else {
-                        SUImagePickerView(image: self.$image, isPresented: self.$shouldPresentImagePicker)
+                        SUImagePickerView(image: $image, date: $date, isPresented: $shouldPresentImagePicker)
                     }
             }.actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
                 ActionSheet(title: Text("Selection Image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
@@ -51,10 +53,11 @@ struct SUImagePickerView: UIViewControllerRepresentable {
     
     var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @Binding var image: UIImage?
+    @Binding var date: Date?
     @Binding var isPresented: Bool
     
     func makeCoordinator() -> ImagePickerViewCoordinator {
-        return ImagePickerViewCoordinator(image: $image, isPresented: $isPresented)
+        return ImagePickerViewCoordinator(image: $image, date: $date, isPresented: $isPresented)
     }
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
@@ -73,16 +76,19 @@ struct SUImagePickerView: UIViewControllerRepresentable {
 class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     @Binding var image: UIImage?
+    @Binding var date: Date?
     @Binding var isPresented: Bool
     
-    init(image: Binding<UIImage?>, isPresented: Binding<Bool>) {
+    init(image: Binding<UIImage?>, date: Binding<Date?>, isPresented: Binding<Bool>) {
         self._image = image
+        self._date = date
         self._isPresented = isPresented
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.image = image
+            self.date = Date()
         }
         self.isPresented = false
     }
@@ -96,8 +102,9 @@ class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIIm
 //just for the preview
 struct ImagePickerPreview_Container: View {
     @State var image: UIImage? = nil
+    @State var date: Date? = Date()
     var body: some View {
-        ImagePicker(image: $image)
+        ImagePicker(image: $image, date: $date)
     }
 }
 

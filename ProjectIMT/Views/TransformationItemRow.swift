@@ -25,7 +25,7 @@ struct TransformationItemRow: View {
     var body: some View {
         
         HStack {
-            ImagePicker(image: $transformation.before_picture)
+            ImagePicker(image: $transformation.before_picture, date: $transformation.before_date)
                 .padding(.horizontal)
             
             VStack(spacing: 4) {
@@ -51,7 +51,8 @@ struct TransformationItemRow: View {
                             .font(.system(size: 15.0))
                         
                         if (transformation.after_picture != nil && transformation.after_date != nil) {
-                            Text(transformation.after_date!, format: .dateTime.day().month().year())
+                            Text(transformation.after_date!.jourEtMois)
+                                .foregroundColor(Color.white)
                                 .font(.system(size: 15.0))
                         } else {
                             Image(systemName: "photo.fill")
@@ -73,7 +74,7 @@ struct TransformationItemRow: View {
                     
             }
             
-            ImagePicker(image: $transformation.after_picture, before_picture: transformation.before_picture)
+            ImagePicker(image: $transformation.after_picture, date: $transformation.after_date, before_picture: transformation.before_picture)
                 .padding(.horizontal)
                 .disabled(transformation.before_picture == nil)
         }
