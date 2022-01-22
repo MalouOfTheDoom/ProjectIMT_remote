@@ -44,7 +44,7 @@ struct CustomersListView: View {
                                     Button(action: {customerSelected = id1; showEditCustomerSheet = true }) {
                                         Image(systemName: "pencil").foregroundColor(Color.blue)
                                     } .sheet(isPresented: $showEditCustomerSheet) {
-                                        EditCustomerSheet(showEditCustomerSheet: $showEditCustomerSheet, customerSelected: $customerSelected)
+                                        EditCustomerSheet(showEditCustomerSheet: $showEditCustomerSheet, customerSelected: customerSelected)
                                     }
                                     
                                     //delete Customer button
@@ -120,6 +120,7 @@ struct CustomersListView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomersListView().environmentObject(CustomersListManager())
+        CustomersListView()
+            .environmentObject(CustomersListManager())
     }
 }

@@ -15,8 +15,6 @@ struct AddCustomerSheet: View {
     
     @State var first_name: String = ""
     @State var last_name: String = ""
-    
-    @State var birthday_date_toggle: Bool = false
     @State var birthday_date = Date()
     
     @State var showAlert = false
@@ -29,15 +27,12 @@ struct AddCustomerSheet: View {
             }
             
             Section {
-                Toggle("Ajouter une date de naissance ?", isOn: $birthday_date_toggle)
-                    .font(.subheadline)
-                if birthday_date_toggle {
-                    DatePicker(
-                            "Date de naissance",
-                            selection: $birthday_date,
-                            displayedComponents: [.date]
-                        )
-                }
+                DatePicker(
+                    "Date de naissance",
+                    selection: $birthday_date,
+                    displayedComponents: [.date]
+                )
+                
             }
             
             Button("Ajouter patient") {
@@ -50,8 +45,6 @@ struct AddCustomerSheet: View {
     
     func addPatient() {
         if (self.first_name != "") {
-            let birthday_date = self.birthday_date_toggle ? self.birthday_date : nil
-            
             customersListManager.addCustomer(first_name: first_name,
                                              last_name: last_name,
                                              birthday_date: birthday_date)
@@ -67,6 +60,7 @@ struct AddCustomerSheet: View {
 struct AddCustomerSheet_Previews: PreviewProvider {
     static var previews: some View {
         AddCustomerSheet(showAddCustomerSheet: .constant(true))
+            .environmentObject(CustomersListManager())
     }
 }
 #endif
