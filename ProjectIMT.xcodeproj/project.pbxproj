@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6628E95C279632FD00C83519 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6628E95B279632FD00C83519 /* CameraView.swift */; };
-		662D7D8427998FB600729A7E /* CustomersListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662D7D8327998FB600729A7E /* CustomersListManager.swift */; };
 		662D7D8727999C6400729A7E /* EditCustomerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662D7D8627999C6400729A7E /* EditCustomerSheet.swift */; };
+		662D7D8B279C814100729A7E /* CustomerListManagerFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662D7D8A279C814100729A7E /* CustomerListManagerFile.swift */; };
 		663C0E31278B694D006576F0 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C0E30278B694D006576F0 /* TextFieldAlert.swift */; };
 		663C0E332793227A006576F0 /* AddCustomerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663C0E322793227A006576F0 /* AddCustomerSheet.swift */; };
 		6644407827877E9700E451F6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6644407727877E9700E451F6 /* ImagePicker.swift */; };
@@ -26,8 +26,8 @@
 
 /* Begin PBXFileReference section */
 		6628E95B279632FD00C83519 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		662D7D8327998FB600729A7E /* CustomersListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomersListManager.swift; sourceTree = "<group>"; };
 		662D7D8627999C6400729A7E /* EditCustomerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCustomerSheet.swift; sourceTree = "<group>"; };
+		662D7D8A279C814100729A7E /* CustomerListManagerFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerListManagerFile.swift; sourceTree = "<group>"; };
 		663C0E30278B694D006576F0 /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
 		663C0E322793227A006576F0 /* AddCustomerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomerSheet.swift; sourceTree = "<group>"; };
 		6644407727877E9700E451F6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				668F40E52785D60600C35379 /* CustomersListView.swift */,
-				662D7D8327998FB600729A7E /* CustomersListManager.swift */,
+				662D7D8A279C814100729A7E /* CustomerListManagerFile.swift */,
 			);
 			path = CustomersList;
 			sourceTree = "<group>";
@@ -211,7 +211,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				668F40E22785D4EC00C35379 /* MainView.swift in Sources */,
-				662D7D8427998FB600729A7E /* CustomersListManager.swift in Sources */,
 				668F40EC2785FA7B00C35379 /* TransformationItemRow.swift in Sources */,
 				663C0E31278B694D006576F0 /* TextFieldAlert.swift in Sources */,
 				668F40E82785DB5000C35379 /* Customer.swift in Sources */,
@@ -223,6 +222,7 @@
 				668F40D42785D1A000C35379 /* ProjectIMTApp.swift in Sources */,
 				663C0E332793227A006576F0 /* AddCustomerSheet.swift in Sources */,
 				6644407827877E9700E451F6 /* ImagePicker.swift in Sources */,
+				662D7D8B279C814100729A7E /* CustomerListManagerFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
