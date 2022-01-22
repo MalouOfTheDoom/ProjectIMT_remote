@@ -10,13 +10,13 @@ import Foundation
 struct Customer {
     let id: UUID
     var first_name: String
-    var last_name: String?
-    var birthday_date: Date?
+    var last_name: String
+    var birthday_date: Date
     
     var transformation_list: [Transformation]
     var number_of_transformations: Int { return transformation_list.count }
     
-    init(first_name: String, last_name: String? = nil, birthday_date: Date? = nil, transformation_list: [Transformation] = []) {
+    init(first_name: String = "", last_name: String = "", birthday_date: Date = Date(), transformation_list: [Transformation] = []) {
         self.id = UUID()
         
         self.first_name = first_name
@@ -40,7 +40,7 @@ class CustomerData: ObservableObject {
             Transformation(name: "Dents de sagesses")])
     ]
     
-    func addCustomer(first_name: String, last_name: String? = nil, birthday_date: Date? = nil) {
+    func addCustomer(first_name: String = "", last_name: String = "", birthday_date: Date = Date()) {
         let customer = Customer(first_name: first_name, last_name: last_name, birthday_date: birthday_date)
         self.customers.append(customer)
     }

@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-//class EditCustomerSheetViewModel: ObservableObject {
-//
-//    @Published var first_name: String
-//
-//    func setup(_ customersListManager: CustomersListManager) {
-//
-//    }
-//}
-
 struct EditCustomerSheet: View {
     
     @Binding var showEditCustomerSheet: Bool
