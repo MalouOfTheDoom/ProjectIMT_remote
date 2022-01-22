@@ -32,7 +32,7 @@ class CustomerData: ObservableObject {
     @Published var customers: [Customer] =
     [
         Customer(first_name: "John", transformation_list: [
-            Transformation(name: "Opération du nez"),
+            Transformation(name: "Opération du nez", before_date: Date()),
             Transformation(name: "Après une visite chez le dermatho"),
             Transformation()]),
         Customer(first_name: "Marc"),
