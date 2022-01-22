@@ -31,7 +31,7 @@ struct ImagePicker: View {
                 .onTapGesture { self.shouldPresentActionScheet = true }
                 .sheet(isPresented: $shouldPresentImagePicker) {
                     if self.sourceType == .camera {
-                        CameraView(captured_image: self.$image, before_picture: before_picture)
+                        CameraView(captured_image: $image, date: $date, before_picture: before_picture)
                     }
                     else {
                         SUImagePickerView(image: $image, date: $date, isPresented: $shouldPresentImagePicker)

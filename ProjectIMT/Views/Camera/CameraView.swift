@@ -11,10 +11,11 @@ import AVFoundation
 struct CameraView: View {
     
     @Binding var captured_image: UIImage?
+    @Binding var date: Date?
     var before_picture: UIImage?
     
     var body: some View {
-        CameraViewWithModel(captured_image: $captured_image, before_picture: before_picture, camera: CameraModel(captured_image: $captured_image))
+        CameraViewWithModel(captured_image: $captured_image, before_picture: before_picture, camera: CameraModel(captured_image: $captured_image, date: $date))
     }
 }
 
@@ -146,9 +147,11 @@ class CameraModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     
     //Pic data
     @Binding var captured_image: UIImage?
+    @Binding var date: Date?
     
-    init(captured_image: Binding<UIImage?>) {
+    init(captured_image: Binding<UIImage?>, date: Binding<Date?>) {
         self._captured_image = captured_image
+        self._date = date
     }
     
     func check() {
@@ -279,7 +282,7 @@ class CameraModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
         
         //saving image ...
         //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        
+        self.date = Date()
         print("saved successfuly")
     }
 }
