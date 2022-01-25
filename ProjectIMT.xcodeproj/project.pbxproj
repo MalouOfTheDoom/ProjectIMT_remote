@@ -93,10 +93,10 @@
 			isa = PBXGroup;
 			children = (
 				662D7D852799900D00729A7E /* CustomersList */,
+				668F40EB2785FA7B00C35379 /* TransformationItemRow.swift */,
 				663C0E322793227A006576F0 /* AddCustomerSheet.swift */,
 				662D7D8627999C6400729A7E /* EditCustomerSheet.swift */,
 				6605211E279340E700DB67B5 /* Camera */,
-				668F40EB2785FA7B00C35379 /* TransformationItemRow.swift */,
 				88FBF844279710D4007377E9 /* ShowTransformationView.swift */,
 			);
 			path = Views;

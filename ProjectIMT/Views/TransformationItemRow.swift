@@ -14,72 +14,86 @@ struct TransformationItemRow: View {
     @State var transformationSheetIsPresented: Bool = false
     @State var cantOpenTransformationAlertIsPresented: Bool = false
     
+    //used in the View to display different situations
     var bothImagesTaken : Bool {
         if (transformation.before_picture != nil && transformation.after_picture != nil) {
             return true
-        } else {
-            return false
         }
+        return false
+        
     }
     
+    //MARK: VIEW
     var body: some View {
         
         HStack {
-            ImagePicker(image: $transformation.before_picture, date: $transformation.before_date)
+            //ImagePicker before
+            ImagePicker(image: $transformation.before_picture,
+                        date: $transformation.before_date)
                 .padding(.horizontal)
             
             VStack(spacing: 4) {
+                
+                //transformation name
                 if let name = transformation.name {
                     Text(name)
                         .font(.subheadline)
                         .lineLimit(1)
                 }
+                
+                //show transformation button
                 Button(action: openTransformation ) { label:  do {
                     HStack {
                         
-                        if (transformation.before_picture != nil && transformation.before_date != nil) {
-                            Text(transformation.before_date!.jourEtMois)
-                                .foregroundColor(Color.white)
-                                .font(.system(size: 15.0))
-                        } else {
-                            Image(systemName: "photo.fill")
-                                .font(.system(size: 20.0))
-                        }
+                        DateIfPicturePresent(picture: transformation.before_picture,
+                                             date: transformation.before_date)
                         
                         Image(systemName: "arrowshape.turn.up.right.fill")
                             .foregroundColor(Color.white)
                             .font(.system(size: 15.0))
                         
-                        if (transformation.after_picture != nil && transformation.after_date != nil) {
-                            Text(transformation.after_date!.jourEtMois)
-                                .foregroundColor(Color.white)
-                                .font(.system(size: 15.0))
-                        } else {
-                            Image(systemName: "photo.fill")
-                                .font(.system(size: 20.0))
-                        }
+                        DateIfPicturePresent(picture: transformation.after_picture,
+                                             date: transformation.after_date)
                     }
                 }}
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(bothImagesTaken ? Color.red : Color.gray)
-                    .foregroundColor(Color.white)
-                    .cornerRadius(20)
-                    .alert("Veuillez selectionner des photos avant de voir la transformation", isPresented: $cantOpenTransformationAlertIsPresented) {
-                        Button("OK", role: .cancel) { }
-                    }
-                    .sheet(isPresented: $transformationSheetIsPresented) {
-                        ShowTransformationView(transformation: self.transformation)
-                    }
-                    
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(bothImagesTaken ? Color.red : Color.gray)
+                .foregroundColor(Color.white)
+                .cornerRadius(20)
+                .alert("Veuillez selectionner des photos avant de voir la transformation", isPresented: $cantOpenTransformationAlertIsPresented) {
+                    Button("OK", role: .cancel) { }
+                }
+                .sheet(isPresented: $transformationSheetIsPresented) {
+                    ShowTransformationView(transformation: self.transformation)
+                }
+                
             }
             
-            ImagePicker(image: $transformation.after_picture, date: $transformation.after_date, before_picture: transformation.before_picture)
+            //ImagePicker after
+            ImagePicker(image: $transformation.after_picture,
+                        date: $transformation.after_date,
+                        before_picture: transformation.before_picture)
                 .padding(.horizontal)
                 .disabled(transformation.before_picture == nil)
         }
     }
     
+    //MARK: VIEW FUNCTIONS
+    func DateIfPicturePresent(picture: UIImage?, date: Date?) -> some View {
+        Group {
+            if (picture != nil && date != nil) {
+                Text(date!.jourEtMois)
+                    .foregroundColor(Color.white)
+                    .font(.system(size: 15.0))
+            } else {
+                Image(systemName: "photo.fill")
+                    .font(.system(size: 20.0))
+            }
+        }
+    }
+    
+    //MARK: VIEWMODEL FUNCTIONS
     func openTransformation() {
         if bothImagesTaken {
             self.transformationSheetIsPresented = true
@@ -90,6 +104,7 @@ struct TransformationItemRow: View {
     }
 }
 
+//MARK: UTILITARIES
 extension Formatter {
     static let jourEtMois: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -103,21 +118,20 @@ extension Date {
 }
 
 
-
-//just for the preview
 //not working
 #if DEBUG
-extension Binding {
-    static func mock(_ transformation: Transformation) -> Binding<Transformation> {
-        var transformation = transformation
-        return Binding<Transformation>(get: {return transformation}, set: {transformation = $0})
-    }
-}
+struct TransformationItemRow_Previews: PreviewProvider {
+  static var previews: some View {
+    PreviewWrapper()
+  }
 
-struct TransformationItem_Previews: PreviewProvider {
-    static var previews: some View {
-        TransformationItemRow(transformation: .mock(Transformation(name: "arrachage de dents")))
+  struct PreviewWrapper: View {
+      @State var transformation = Transformation(name: "lifting")
+
+    var body: some View {
+      TransformationItemRow(transformation: $transformation)
     }
+  }
 }
 #endif
 
