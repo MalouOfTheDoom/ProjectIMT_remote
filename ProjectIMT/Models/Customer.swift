@@ -75,18 +75,4 @@ class CustomerData: ObservableObject {
         }
         
     }
-    
-    func getTransformation(customer_id: UUID, transformation_id: UUID) -> Transformation? {
-        let index1 = customers.firstIndex(where: { customer in
-            return customer.id == customer_id ? true : false
-        })
-        if index1 != nil {
-            if let index2 = customers[index1!].transformation_list.firstIndex(where: { transformation in
-                return transformation.id == transformation_id ? true : false
-            }) {
-                return customers[index1!].transformation_list[index2]
-            }
-        }
-        return nil
-    }
 }

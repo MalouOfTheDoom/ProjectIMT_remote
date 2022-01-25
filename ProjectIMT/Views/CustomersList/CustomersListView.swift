@@ -41,35 +41,20 @@ struct CustomersListView: View {
                                     Text(customerData.customers[id1].first_name)
                                     
                                     //edit Customer button
-                                    Button(action: {customerSelected = id1; showEditCustomerSheet = true }) {
-                                        Image(systemName: "pencil").foregroundColor(Color.blue)
-                                    } .sheet(isPresented: $showEditCustomerSheet) {
-                                        EditCustomerSheet(showEditCustomerSheet: $showEditCustomerSheet, customerSelected: customerSelected)
-                                    }
+                                    EditCustomerAction(customer_index: id1)
+                                    
                                     
                                     //delete Customer button
-                                    Button(role: .destructive,
-                                           action: {customerSelected = id1; showDeleteConfirmationAlert = true}) {
-                                        Image(systemName: "trash")
-                                    } .alert(isPresented: $showDeleteConfirmationAlert) {
-                                        Alert(title: Text("Delete " + customerData.customers[customerSelected].first_name + " ?"),
-                                              primaryButton: .default(Text("Cancel")),
-                                              secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer()} )
-                                        )
-                                    }
+                                    DeleteCustomerAction(customer_index: id1)
                                     
                                     //add Transformation button
-                                    Button(action: {customerSelected = id1; showAddTransformationAlert = true} ) {
-                                        Image(systemName: "plus.circle").foregroundColor(Color.green)
-                                    }
+                                    AddTransformationButton(customer_index: id1)
                                     
                                     Spacer()
                                     
-                                    Text(String(customerData.customers[id1].transformation_list.count))
-                                        .foregroundColor(.blue)
-                                        .font(.system(size: 15.0))
-                                        .fontWeight(.light)
-                                    
+                                    //Number of Transformations per customer
+                                    NumberOfTransformation(customer_index: id1)
+                    
                                 }
                             })
                         }
@@ -88,15 +73,45 @@ struct CustomersListView: View {
                               }
                           }
                       }
-                      
-                      .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
-                          TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
-                      }
-                      
                     
+                }.textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
+                    TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
                 }
             }
         }
+    }
+    
+    func EditCustomerAction(customer_index: Int) -> some View {
+        Button(action: {customerSelected = customer_index; showEditCustomerSheet = true }) {
+            Image(systemName: "pencil").foregroundColor(Color.blue)
+        } .sheet(isPresented: $showEditCustomerSheet) {
+            EditCustomerSheet(showEditCustomerSheet: $showEditCustomerSheet, customerSelected: customerSelected)
+        }
+    }
+    
+    func DeleteCustomerAction(customer_index: Int) -> some View {
+        Button(role: .destructive,
+               action: {customerSelected = customer_index; showDeleteConfirmationAlert = true}) {
+            Image(systemName: "trash")
+        } .alert(isPresented: $showDeleteConfirmationAlert) {
+            Alert(title: Text("Delete " + customerData.customers[customerSelected].first_name + " ?"),
+                  primaryButton: .default(Text("Cancel")),
+                  secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer()} )
+            )
+        }
+    }
+    
+    func AddTransformationButton(customer_index: Int) -> some View {
+        Button(action: {customerSelected = customer_index; showAddTransformationAlert = true}) {
+            Image(systemName: "plus.circle").foregroundColor(Color.green)
+        }
+    }
+    
+    func NumberOfTransformation(customer_index: Int) -> some View {
+        Text(String(customerData.customers[customer_index].transformation_list.count))
+            .foregroundColor(.blue)
+            .font(.system(size: 15.0))
+            .fontWeight(.light)
     }
     
     func deleteRow(customer_index: Int, indexes: IndexSet?) { //we modifiy our customerData (which is shared across all views, as an @StateObject)
