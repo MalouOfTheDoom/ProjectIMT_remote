@@ -26,6 +26,7 @@ class CustomersListManager: ObservableObject {
         self.customers.append(customer)
     }
     
+    //not used
     func getCustomer(customer_id: UUID) -> Customer? {
         if let index = customers.firstIndex(where: { customer in
             return customer.id == customer_id ? true : false
@@ -68,6 +69,7 @@ class CustomersListManager: ObservableObject {
         
     }
     
+    //not used
     func getTransformation(customer_id: UUID, transformation_id: UUID) -> Transformation? {
         let index1 = customers.firstIndex(where: { customer in
             return customer.id == customer_id ? true : false

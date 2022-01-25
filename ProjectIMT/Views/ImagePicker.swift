@@ -8,8 +8,16 @@
 import SwiftUI
 import UIKit
 
-//Todo: rajouter gestion des erreurs
+/*
+ We use :
+    - UIImagePickerView() to select photos from the galery, because it is convenient and pre-build
+    - we could have used UIImagePickerView() to take photos with the camera too, but since we need more customization, we will use AVFoundation instead.
+ 
+Both these solutions are UIKit View, hence the use of a ControllerRepresentable and a ViewCoordinator to implement them inside a SwiftUI view.
+*/
+
 struct ImagePicker: View {
+    
     @Binding var image: UIImage?
     @Binding var date: Date?
     
@@ -99,7 +107,7 @@ class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIIm
     
 }
 
-//just for the preview
+#if DEBUG
 struct ImagePickerPreview_Container: View {
     @State var image: UIImage? = nil
     @State var date: Date? = Date()
@@ -113,3 +121,5 @@ struct ImagePicker_Previews: PreviewProvider {
         ImagePickerPreview_Container()
     }
 }
+#endif
+

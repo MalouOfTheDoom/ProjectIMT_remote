@@ -54,15 +54,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6605211E279340E700DB67B5 /* Camera */ = {
-			isa = PBXGroup;
-			children = (
-				6644407727877E9700E451F6 /* ImagePicker.swift */,
-				6628E95B279632FD00C83519 /* CameraView.swift */,
-			);
-			path = Camera;
-			sourceTree = "<group>";
-		};
 		662D7D852799900D00729A7E /* CustomersList */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,10 +84,11 @@
 			isa = PBXGroup;
 			children = (
 				662D7D852799900D00729A7E /* CustomersList */,
+				668F40EB2785FA7B00C35379 /* TransformationItemRow.swift */,
+				6644407727877E9700E451F6 /* ImagePicker.swift */,
+				6628E95B279632FD00C83519 /* CameraView.swift */,
 				663C0E322793227A006576F0 /* AddCustomerSheet.swift */,
 				662D7D8627999C6400729A7E /* EditCustomerSheet.swift */,
-				6605211E279340E700DB67B5 /* Camera */,
-				668F40EB2785FA7B00C35379 /* TransformationItemRow.swift */,
 				88FBF844279710D4007377E9 /* ShowTransformationView.swift */,
 			);
 			path = Views;
