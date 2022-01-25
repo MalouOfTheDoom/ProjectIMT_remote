@@ -121,7 +121,7 @@ struct CustomersListView: View {
     }
     
     func NumberOfTransformation(customer_index: Int) -> some View {
-        Text(String(customerData.customers[customer_index].transformation_list.count))
+        Text(String(customerData.customers[customer_index].number_of_transformations))
             .foregroundColor(.blue)
             .font(.system(size: 15.0))
             .fontWeight(.light)
