@@ -312,9 +312,3 @@ struct CameraPreview: UIViewRepresentable {
     }
 
 }
-
-//struct CameraView2_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CameraView2()
-//    }
-//}
