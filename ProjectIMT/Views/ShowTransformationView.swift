@@ -11,13 +11,16 @@ struct ShowTransformationView: View {
     var transformation: Transformation
     
     @State var SliderValue: Double = 0
+    @State var isShowingPopover: Bool = false
+    
     var body: some View {
                
         VStack{
-            Text(transformation.name!)
-            //Text("Before: "+transformation.before_date)
-            //Text("After: "+transformation.after_date)
-            //Image(transformation.before_picture)
+            
+            if transformation.name != nil {
+                Text(transformation.name!)
+            }
+            
             ZStack {
                 Image(uiImage: transformation.before_picture!)
                     .resizable()
