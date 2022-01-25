@@ -1,5 +1,7 @@
 # ProjectIMT_remote
 
+Application SwiftUI permettant la prise de deux photos d'un même visage à deux instants différents, pour montrer son évolution dans le temps.
+
 ## MODELS
 
 * **Customer**  
