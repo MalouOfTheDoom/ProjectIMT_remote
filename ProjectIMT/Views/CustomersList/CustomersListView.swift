@@ -9,19 +9,23 @@ import SwiftUI
 
 struct CustomersListView: View {
     
-    @EnvironmentObject var customerData: CustomersListManager //CustomerData is a class that stores our pre-added data. When it's @published "customers" property is modified, all the views that use customerData will update.
+    @EnvironmentObject var customerData: CustomersListManager //stores our pre-added data, via the @Published customers property.
     
-    @State private var selection: Set<UUID> = []
-    @State private var showDeleteConfirmationAlert: Bool = false
-    @State var customerSelected: Int = 0 //because there is only one alert, it needs to know which row we clicked
+    @State private var selection: Set<UUID> = [] //used to expand/collapse the customer sections
+    @State var customerSelected: Int = 0 //stores the clicked customer for action buttons
    
-
+    //delete transformation alert
+    @State private var showDeleteConfirmationAlert: Bool = false
+    
+    //add transformation alert
     @State private var transformationNameToAdd: String? = ""
     @State private var showAddTransformationAlert: Bool = false
     
+    //add and edit customer sheets
     @State private var showAddCustomerSheet: Bool = false
     @State private var showEditCustomerSheet: Bool = false
     
+    //MARK: VIEW
     
     var body: some View {
         GeometryReader { geometry in
@@ -40,11 +44,11 @@ struct CustomersListView: View {
                                 HStack {
                                     Text(customerData.customers[id1].first_name)
                                     
-                                    //edit Customer button
+                                    //edit Customer button + sheet
                                     EditCustomerAction(customer_index: id1)
                                     
                                     
-                                    //delete Customer button
+                                    //delete Customer button + confirmation alert
                                     DeleteCustomerAction(customer_index: id1)
                                     
                                     //add Transformation button
@@ -73,38 +77,47 @@ struct CustomersListView: View {
                               }
                           }
                       }
-                    
-                }.textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
+                } .textFieldAlert(isPresented: $showAddTransformationAlert) { () -> TextFieldAlert in
                     TextFieldAlert(title: "Ajouter une transformation", message: "", text: $transformationNameToAdd, doneAction: addTransformation)
                 }
             }
         }
     }
     
+    //MARK: VIEW FUNCTIONS
+    
     func EditCustomerAction(customer_index: Int) -> some View {
         Button(action: {customerSelected = customer_index; showEditCustomerSheet = true }) {
-            Image(systemName: "pencil").foregroundColor(Color.blue)
+            Image(systemName: "pencil")
+                .foregroundColor(Color.blue)
         } .sheet(isPresented: $showEditCustomerSheet) {
-            EditCustomerSheet(showEditCustomerSheet: $showEditCustomerSheet, customerSelected: customerSelected)
+            EditCustomerSheet(showEditCustomerSheet: $showEditCustomerSheet,
+                              customerSelected: customerSelected)
         }
     }
     
     func DeleteCustomerAction(customer_index: Int) -> some View {
-        Button(role: .destructive,
-               action: {customerSelected = customer_index; showDeleteConfirmationAlert = true}) {
+        Button(role: .destructive, action: {
+            customerSelected = customer_index
+            showDeleteConfirmationAlert = true})
+        {
             Image(systemName: "trash")
-        } .alert(isPresented: $showDeleteConfirmationAlert) {
+        }
+        .alert(isPresented: $showDeleteConfirmationAlert) {
             Alert(title: Text("Delete " + customerData.customers[customerSelected].first_name + " ?"),
                   primaryButton: .default(Text("Cancel")),
-                  secondaryButton: .destructive(Text("Delete"), action: { deleteCustomer()} )
+                  secondaryButton: .destructive(Text("Delete"), action: deleteCustomer )
             )
         }
     }
     
     func AddTransformationButton(customer_index: Int) -> some View {
-        Button(action: {customerSelected = customer_index; showAddTransformationAlert = true}) {
-            Image(systemName: "plus.circle").foregroundColor(Color.green)
-        }
+        Button(action: {
+            customerSelected = customer_index
+            showAddTransformationAlert = true}) {
+                Image(systemName: "plus.circle").foregroundColor(Color.green)
+            }
+        //we can not add the .TextFieldAlert() here because as we did it, it is not appliable on a Button()
     }
     
     func NumberOfTransformation(customer_index: Int) -> some View {
@@ -114,10 +127,16 @@ struct CustomersListView: View {
             .fontWeight(.light)
     }
     
-    func deleteRow(customer_index: Int, indexes: IndexSet?) { //we modifiy our customerData (which is shared across all views, as an @StateObject)
-        let customer_id = customerData.customers[customer_index].id
+    //MARK: VIEWMODEL FUNCTIONS
+    
+    func deleteRow(customer_index: Int, indexes: IndexSet?) {
+        let customer = customerData.customers[customer_index]
+        let customer_id = customer.id
+        
+        //as we do not use the multi-delete property of the list, we just want one index
         let transformation_index = indexes!.first!
-        let transformation_id = customerData.customers[customer_index].transformation_list[transformation_index].id
+        let transformation_id = customer.transformation_list[transformation_index].id
+        
         customerData.deleteTransformation(customer_id: customer_id, transformation_id: transformation_id)
     }
     
@@ -128,14 +147,17 @@ struct CustomersListView: View {
     
     func addTransformation() {
         let customer_id = customerData.customers[self.customerSelected].id
-        customerData.addTransformation(customer_id: customer_id,transformation_name: transformationNameToAdd!)
+        customerData.addTransformation(customer_id: customer_id,
+                                       transformation_name: transformationNameToAdd!)
     }
     
 }
 
+#if DEBUG
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         CustomersListView()
             .environmentObject(CustomersListManager())
     }
 }
+#endif
