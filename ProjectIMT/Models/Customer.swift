@@ -16,7 +16,7 @@ struct Customer {
     var transformation_list: [Transformation]
     var number_of_transformations: Int { return transformation_list.count }
     
-    init(first_name: String = "", last_name: String = "", birthday_date: Date = Date(), transformation_list: [Transformation] = []) {
+    init(first_name: String, last_name: String = "", birthday_date: Date = Date(), transformation_list: [Transformation] = []) {
         self.id = UUID()
         
         self.first_name = first_name
