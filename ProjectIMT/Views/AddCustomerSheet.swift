@@ -32,7 +32,6 @@ struct AddCustomerSheet: View {
                     selection: $birthday_date,
                     displayedComponents: [.date]
                 )
-                
             }
             
             Button("Ajouter patient") {
@@ -50,7 +49,6 @@ struct AddCustomerSheet: View {
                                              birthday_date: birthday_date)
             self.showAddCustomerSheet = false
         } else {
-            print("hello")
             self.showAlert = true
         }
     }
